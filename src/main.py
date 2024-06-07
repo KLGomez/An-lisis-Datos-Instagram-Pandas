@@ -1,12 +1,13 @@
 import pandas as pd
+from data_processing import load_data
+from analysis import analyze_data
+from visualization import plot_top_accounts
 
+# Cargar los datos desde el archivo raw_data.csv
+data = load_data('data/raw_data.csv')
 
-def main():
-    # Cargar los datos desde el archivo raw_data.csv
-    raw_data = pd.read_csv('data/raw_data.csv')
+# Realizar el análisis de datos
+analysis_results = analyze_data(data)
 
-    # Mostrar las primeras filas de los datos para verificar la carga correcta
-    print(raw_data.head())
-
-if __name__ == "_main_":
-    main()
+# Visualizar las cuentas principales con más seguidores
+plot_top_accounts(data)
