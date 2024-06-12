@@ -1,31 +1,43 @@
 import pandas as pd
 
-def load_data(file_path):
-    """
-    Carga los datos desde un archivo CSV.
+# Función para cargar los datos desde un archivo CSV
+def load_data(filepath):
+    data = pd.read_csv(filepath)
+    return data
 
-    Args:
-        file_path (str): Ruta del archivo CSV a cargar.
-
-    Returns:
-        pandas.DataFrame: DataFrame con los datos cargados.
-    """
-    try:
-        data = pd.read_csv(file_path)
-        return data
-    except FileNotFoundError:
-        print(f"Error: El archivo {file_path} no se encuentra.")
-        return None
-
+# Función para limpiar los datos
 def clean_data(data):
-    """
-    Limpia los datos eliminando filas con valores nulos.
+    # Normalizar nombres de columnas
+    data.columns = [col.strip().lower().replace(" ", "_").replace("(", "").replace(")", "").replace("[2]", "").replace("/", "_") for col in data.columns]
 
-    Args:
-        data (pandas.DataFrame): DataFrame a limpiar.
+    # Imprimir los nombres de las columnas para verificar
+    print("Columnas:", data.columns)
 
-    Returns:
-        pandas.DataFrame: DataFrame limpio sin valores nulos.
-    """
-    cleaned_data = data.dropna()
-    return cleaned_data
+    # Eliminar la última fila que contiene metadatos
+    data = data[:-1]
+
+    # El nombre correcto de la columna de seguidores
+    column_name = 'followersmillions'
+
+    # Imprimir valores únicos de la columna para identificar problemas
+    print("Valores únicos antes de la limpieza:", data[column_name].unique())
+
+    # Reemplazar caracteres no deseados y convertir a numérico, manejar errores
+    data[column_name] = pd.to_numeric(data[column_name].str.replace(',', ''), errors='coerce')
+
+    # Imprimir valores únicos después de intentar convertir a numérico
+    print("Valores únicos después de intentar convertir a numérico:", data[column_name].unique())
+
+    # Eliminar filas con valores no numéricos
+    data = data.dropna(subset=[column_name])
+
+    return data
+
+# Bloque principal
+if __name__ == "__main__":
+    filepath = 'data/raw_data.csv'  # Ruta al archivo CSV
+    data = load_data(filepath)  # Cargar datos
+    clean_data = clean_data(data)  # Limpiar datos
+
+    # Guardar los datos limpios en un nuevo archivo CSV
+    clean_data.to_csv('data/processed_data.csv', index=False)

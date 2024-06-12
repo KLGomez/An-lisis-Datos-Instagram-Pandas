@@ -1,32 +1,37 @@
 import pandas as pd
 
+def calculate_mean(data, column_name):
+    """Calcula la media de una columna numérica de los datos."""
+    return data[column_name].mean()
+
+def calculate_median(data, column_name):
+    """Calcula la mediana de una columna numérica de los datos."""
+    return data[column_name].median()
+
+def calculate_mode(data, column_name):
+    """Calcula la moda de una columna de los datos."""
+    return data[column_name].mode()
+
+def top_accounts_by_followers(data, n=5):
+    """Devuelve las N cuentas principales por seguidores."""
+    return data.sort_values('followersmillions', ascending=False).head(n)
+
 def analyze_data(data, column_name):
-    """
-    Realiza el análisis de los datos y devuelve los resultados.
-    
-    Args:
-    - data (DataFrame): DataFrame con los datos a analizar.
-    - column_name (str): Nombre de la columna a analizar.
+    """Realiza análisis de los datos y devuelve resultados."""
+    mean = calculate_mean(data, column_name)
+    median = calculate_median(data, column_name)
+    mode = calculate_mode(data, column_name)
+    top_accounts = top_accounts_by_followers(data)  # Esta función ahora devuelve un DataFrame
 
-    Returns:
-    - analysis_results (dict): Diccionario con los resultados del análisis.
-    """
-    
-    if column_name not in data.columns:
-        raise ValueError(f'La columna {column_name} no está presente en el DataFrame.')
+    # Crear un DataFrame a partir del diccionario
+    analysis_results = pd.DataFrame({
+        'mean': [mean],
+        'median': [median],
+        'mode': [mode]
+    })
 
-    # Calcular métricas de análisis
-    avg_followers = data[column_name].mean()
-    total_accounts = data.shape[0]
-    max_followers = data[column_name].max()
-    min_followers = data[column_name].min()
+    # Agregar los top_accounts al DataFrame
+    top_accounts['username'] = top_accounts.index  # Movemos el índice 'username' a una columna
+    analysis_results = pd.concat([analysis_results, top_accounts], axis=1)
 
-    # Generar un diccionario con los resultados del análisis
-    analysis_results = {
-        'Promedio de Seguidores': avg_followers,
-        'Total de Cuentas': total_accounts,
-        'Máximo de Seguidores': max_followers,
-        'Mínimo de Seguidores': min_followers
-    }
-    
     return analysis_results

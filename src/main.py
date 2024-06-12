@@ -1,13 +1,20 @@
-import pandas as pd
-from data_processing import load_data
+from data_processing import load_data, clean_data
 from analysis import analyze_data
-from visualization import plot_top_accounts
+from visualization import visualize_data
 
-# Cargar los datos desde el archivo raw_data.csv
-data = load_data('data/raw_data.csv')
+def main():
+    # Cargar los datos
+    data = load_data("data/raw_data.csv")
 
-# Realizar el análisis de datos
-analysis_results = analyze_data(data)
+    # Limpiar los datos
+    cleaned_data = clean_data(data)
 
-# Visualizar las cuentas principales con más seguidores
-plot_top_accounts(data)
+    # Realizar análisis
+    analysis_results = analyze_data(cleaned_data, 'followersmillions')
+
+    # Visualizar los resultados
+    visualize_data(analysis_results)
+
+if __name__ == "__main__":
+    main()
+

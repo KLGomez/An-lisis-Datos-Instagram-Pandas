@@ -1,24 +1,19 @@
 import matplotlib.pyplot as plt
 
-def plot_top_accounts(data):
-    """Visualiza las cuentas principales con más seguidores en un gráfico de barras horizontal."""
-    top_accounts = data.sort_values(by='Followers(millions)[2]', ascending=False).head(10)
-    
-    fig, ax = plt.subplots(figsize=(12, 8))
-    colors = ['skyblue' if row['Country/Continent'] == 'United States' else 'lightcoral' for index, row in top_accounts.iterrows()]
-    
-    ax.barh(top_accounts['Username'], top_accounts['Followers(millions)[2]'], color=colors)
-    
-    ax.set_xlabel('Seguidores (millones)')
-    ax.set_ylabel('Usuario de Instagram')
-    ax.set_title('Top 10 Cuentas de Instagram con Más Seguidores')
-    
-    for i, v in enumerate(top_accounts['Followers(millions)[2]']):
-        ax.text(v + 3, i, f'{v:.1f}M', color='black', va='center')
-    
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    
-    plt.gca().invert_yaxis()  
+def visualize_data(analysis_results):
+    # Extraer los datos relevantes para la visualización
+    top_accounts = analysis_results.head(10)  # Obtener las 10 cuentas con más seguidores
+    usernames = top_accounts['owner']
+    followers = top_accounts['followersmillions']
+
+    # Crear el gráfico de barras
+    plt.figure(figsize=(12, 6))
+    plt.bar(usernames, followers, color='skyblue')
+    plt.xlabel('Usuario')
+    plt.ylabel('Seguidores (millones)')
+    plt.title('Cuentas de Instagram con más seguidores')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+
+    # Mostrar el gráfico
     plt.show()
-    
