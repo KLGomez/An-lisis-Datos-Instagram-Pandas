@@ -28,5 +28,5 @@ class TestDataProcessing(unittest.TestCase):
         # Verificar que la limpieza de datos eliminó los valores nulos
         self.assertEqual(cleaned_data.isnull().values.sum(), 0)
 
-if __name__ == '_main_':
+if __name__ == '__main__':
     unittest.main()

@@ -28,5 +28,5 @@ class TestDataProcessing(unittest.TestCase):
         # Verificar que no haya valores nulos en el DataFrame limpio
         self.assertTrue(cleaned_df.isnull().sum().sum() == 0)
 
-if __name__ == '_main_':
+if __name__ == '__main__':
     unittest.main()
