@@ -1,6 +1,6 @@
 # Análisis de Datos de Instagram
 
-Este proyecto tiene como objetivo realizar un análisis de datos de cuentas de Instagram con más seguidores con la libreria de Python, pANDAS.
+Este proyecto tiene como objetivo realizar un análisis de datos de cuentas de Instagram con más seguidores con la libreria de Python, Pandas.
 
 ## Estructura del Proyecto
 - /data: Contiene los archivos de datos (raw_data.csv, processed_data.csv).
