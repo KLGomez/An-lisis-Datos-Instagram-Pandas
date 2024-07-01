@@ -19,3 +19,4 @@ Este proyecto tiene como objetivo realizar un análisis de datos de cuentas de I
 - Análisis de datos.
 - Visualización de datos.
 
+## Link video: https://drive.google.com/file/d/1wEP_LB7Xo2apvX3UQlMl8YWR6fhMYzsj/view?usp=sharing
